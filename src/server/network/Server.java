@@ -26,7 +26,7 @@ public class Server {
             connectionPool = Executors.newFixedThreadPool(ServerConstants.MAX_PLAYERS);
             connectionListener.start();
         }catch(Exception e){
-            shutdown();
+            serverStop();
             e.printStackTrace();
         }
     }
@@ -39,11 +39,17 @@ public class Server {
         return listening;
     }
 
-    public static void shutdown(){
+    public static void serverStop(){
         try{
-            connectionListener.stopListening();
-            server.close();
-            connectionPool.shutdown();
+            if(connectionListener != null){
+                connectionListener.stopListening();
+            }
+            if(server != null){
+                server.close();
+            }
+            if(connectionPool != null){
+                connectionPool.shutdown();
+            }
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -80,7 +86,7 @@ public class Server {
                     }
                 }
             }catch(Exception  e){
-                shutdown();
+                serverStop();
                 e.printStackTrace();
             }
         }

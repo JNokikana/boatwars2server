@@ -21,6 +21,7 @@ public class ConnectionHandler extends Thread{
             output = new PrintWriter(client.getOutputStream(), true);
             running = true;
         }catch(Exception e){
+            disconnectFromClient();
             e.printStackTrace();
         }
     }
@@ -33,10 +34,18 @@ public class ConnectionHandler extends Thread{
         return output;
     }
 
-    public void disconnectFromClient() throws Exception{
-        input.close();
-        client.close();
-        running = false;
+    public void disconnectFromClient(){
+        try{
+            if(input != null){
+                input.close();
+            }
+            if(client != null){
+                client.close();
+            }
+            running = false;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void handleRequest(MessageObject data){
@@ -58,6 +67,7 @@ public class ConnectionHandler extends Thread{
                 }
             }
         }catch(Exception e){
+            disconnectFromClient();
             e.printStackTrace();
         }
     }
