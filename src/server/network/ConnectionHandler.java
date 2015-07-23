@@ -55,7 +55,6 @@ public class ConnectionHandler extends Thread{
     @Override
     public void run(){
         try{
-
             while(running){
                 while((readData = input.readLine()) != null){
                     System.out.println(readData);
