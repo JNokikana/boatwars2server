@@ -18,12 +18,14 @@ public class Server {
     private static List<ConnectionHandler> connections;
     private static boolean listening;
     public static Gson gson;
-    public static Gui gui;
+    private static Gui gui;
+    private static boolean loggingEnabled;
 
-    public static void init(Gui chosen){
+    public static void init(Gui chosen, boolean logging){
         try{
             gson = new Gson();
             gui = chosen;
+            loggingEnabled = logging;
             connections = new ArrayList<ConnectionHandler>();
             connectionListener = new ConnectionListener();
             connectionPool = Executors.newFixedThreadPool(ServerConstants.MAX_PLAYERS);
@@ -40,6 +42,14 @@ public class Server {
 
     public static boolean isRunning(){
         return listening;
+    }
+
+    public static Gui getGui(){
+        return gui;
+    }
+
+    public static boolean isLoggingEnabled(){
+        return loggingEnabled;
     }
 
     public static void serverStop(){
