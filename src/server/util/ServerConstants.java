@@ -4,6 +4,9 @@ package server.util;
  * Created by Joonas on 23.7.2015.
  */
 public abstract interface ServerConstants {
+
+    public final static String SERVER_MESSAGE_START = "BoatWars server started!";
+
     public final static int MAX_PLAYERS = 2;
     public final static int PORT = 17413;
     /*testi*/

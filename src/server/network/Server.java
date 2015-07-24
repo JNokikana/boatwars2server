@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import server.gui.Gui;
 import server.util.Sender;
 import server.util.ServerConstants;
+import server.util.ServerLogger;
 
 import java.net.ServerSocket;
 import java.util.ArrayList;
@@ -30,9 +31,10 @@ public class Server {
             connectionListener = new ConnectionListener();
             connectionPool = Executors.newFixedThreadPool(ServerConstants.MAX_PLAYERS);
             connectionListener.start();
+            gui.printInfo(ServerConstants.SERVER_MESSAGE_START);
         }catch(Exception e){
             serverStop();
-            e.printStackTrace();
+            gui.printError("", e);
         }
     }
 
@@ -64,7 +66,7 @@ public class Server {
                 connectionPool.shutdown();
             }
         }catch(Exception e){
-            e.printStackTrace();
+            gui.printError("", e);
         }
     }
 
@@ -100,7 +102,7 @@ public class Server {
                 }
             }catch(Exception  e){
                 serverStop();
-                e.printStackTrace();
+                gui.printError("", e);
             }
         }
     }

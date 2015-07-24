@@ -57,7 +57,7 @@ public class ConnectionHandler extends Thread{
         try{
             while(running){
                 while((readData = input.readLine()) != null){
-                    System.out.println(readData);
+                    Server.getGui().printInfo(readData);
                     handleRequest(Server.gson.fromJson(readData, MessageObject.class));
                 }
 

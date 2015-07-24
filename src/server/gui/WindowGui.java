@@ -11,7 +11,7 @@ public class WindowGui extends Gui{
     }
 
     @Override
-    public void printError(String error) {
+    public void printError(String error, Exception e) {
 
     }
 }
