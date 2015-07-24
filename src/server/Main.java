@@ -1,5 +1,6 @@
 package server;
 
+import server.gui.ConsoleGui;
 import server.network.Server;
 
 /**
@@ -8,6 +9,6 @@ import server.network.Server;
  */
 public class Main {
     public static void main(String[]args){
-        Server.init();
+        Server.init(new ConsoleGui());
     }
 }

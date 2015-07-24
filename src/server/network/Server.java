@@ -1,6 +1,7 @@
 package server.network;
 
 import com.google.gson.Gson;
+import server.gui.Gui;
 import server.util.Sender;
 import server.util.ServerConstants;
 
@@ -17,10 +18,12 @@ public class Server {
     private static List<ConnectionHandler> connections;
     private static boolean listening;
     public static Gson gson;
+    public static Gui gui;
 
-    public static void init(){
+    public static void init(Gui chosen){
         try{
             gson = new Gson();
+            gui = chosen;
             connections = new ArrayList<ConnectionHandler>();
             connectionListener = new ConnectionListener();
             connectionPool = Executors.newFixedThreadPool(ServerConstants.MAX_PLAYERS);
