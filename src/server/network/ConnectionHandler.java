@@ -1,6 +1,8 @@
 package server.network;
 
 import server.util.MessageObject;
+import server.util.Player;
+import server.util.ServerConstants;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -14,6 +16,7 @@ public class ConnectionHandler extends Thread{
     private BufferedReader input;
     private PrintWriter output;
     private String readData;
+    private Player player;
     
     public ConnectionHandler(Socket client){
         try{
@@ -56,7 +59,10 @@ public class ConnectionHandler extends Thread{
     }
 
     public void handleRequest(MessageObject data){
-        System.out.println(data.getMessage());
+        switch(data.getType()){
+            case ServerConstants.REQUEST_JOIN:
+
+        }
     }
     
     @Override

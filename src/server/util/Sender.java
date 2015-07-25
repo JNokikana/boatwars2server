@@ -19,14 +19,14 @@ public class Sender {
     public static void broadcastToAll(List<ConnectionHandler> clients, String type, String text) {
         MessageObject message = new MessageObject(type, text, SENDER_NAME);
         for (int i = 0; i < clients.size(); i++) {
-            Server.getGui().printInfo(" - DATA IS MOVING!!!!!: " + text);
+            Server.getGui().printInfo(text);
             clients.get(i).getOutput().println(Server.gson.toJson(message));
         }
     }
 
     public static void closeConnection(ConnectionHandler client, String message) {
         try {
-            Server.getGui().printInfo(" - DATA IS MOVING!!!!!: " + message);
+            Server.getGui().printInfo(message);
             MessageObject object = new MessageObject(ServerConstants.REQUEST_INFO, message, SENDER_NAME);
             client.getOutput().println(Server.gson.toJson(object));
             client.disconnectFromClient();

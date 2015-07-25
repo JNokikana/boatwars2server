@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import server.gui.Gui;
 import server.util.Sender;
 import server.util.ServerConstants;
-import server.util.ServerLogger;
 
 import java.net.ServerSocket;
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ public class Server {
     public static Gson gson;
     private static Gui gui;
     private static boolean loggingEnabled;
+    private static boolean inProgress;
 
     public static void init(Gui chosen, boolean logging){
         try{
@@ -56,6 +56,14 @@ public class Server {
 
     public static boolean isLoggingEnabled(){
         return loggingEnabled;
+    }
+
+    public static boolean isInProgress() {
+        return inProgress;
+    }
+
+    public static void setInProgress(boolean inProgress) {
+        Server.inProgress = inProgress;
     }
 
     public static void serverStop(){
@@ -107,7 +115,7 @@ public class Server {
                 while(listening){
                     ConnectionHandler client = new ConnectionHandler(server.accept());
                     if(isServerFull()){
-                        Sender.closeConnection(client, "Connection refused");
+                        Sender.closeConnection(client, "Refused connection to " + client.getClient().getInetAddress().getHostAddress() + " - Server is full.");
                     }
                     else{
                         connections.add(client);
