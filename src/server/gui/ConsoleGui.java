@@ -8,12 +8,12 @@ import java.util.Calendar;
 public class ConsoleGui extends Gui{
     @Override
     public void printInfo(String info) {
-        System.out.println("[" + DATE_FORMAT.format(Calendar.getInstance().getTime()) + "][INFO]:" + info);
+        System.out.println("[" + DATE_FORMAT.format(Calendar.getInstance().getTime()) + "][INFO]: " + info);
     }
 
     @Override
     public void printError(String error, Exception e) {
-        System.out.println("[" + DATE_FORMAT.format(Calendar.getInstance().getTime()) + "][ERROR]:" + error);
+        System.out.println("[" + DATE_FORMAT.format(Calendar.getInstance().getTime()) + "][ERROR]: " + error);
         e.printStackTrace();
     }
 }

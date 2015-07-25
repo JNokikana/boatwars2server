@@ -50,6 +50,10 @@ public class Server {
         return gui;
     }
 
+    public static ServerSocket getServer(){
+        return server;
+    }
+
     public static boolean isLoggingEnabled(){
         return loggingEnabled;
     }
@@ -84,6 +88,21 @@ public class Server {
             listening = false;
         }
 
+        /**
+         * Cleans up any leftover connections that have disconnected.
+         */
+        private void connectionCleanup(){
+
+        }
+
+        /**
+         * Checks if the server is full.
+         * @return
+         */
+        private boolean isServerFull(){
+            return false;
+        }
+
         @Override
         public void run(){
             try{
@@ -91,8 +110,9 @@ public class Server {
 
                 while(listening){
                     ConnectionHandler client = new ConnectionHandler(server.accept());
-                    if(connections.size() >= ServerConstants.MAX_PLAYERS){
-                        Sender.closeConnection(client, "Paskaa perseeseen");
+                    connectionCleanup();
+                    if(isServerFull()){
+                        Sender.closeConnection(client, "Connection refused");
                     }
                     else{
                         connections.add(client);
