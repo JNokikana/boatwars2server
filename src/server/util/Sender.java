@@ -20,7 +20,7 @@ public class Sender {
         MessageObject message = new MessageObject(type, text, SENDER_NAME);
         for (int i = 0; i < clients.size(); i++) {
             Server.getGui().printInfo("Sending: " + text);
-            clients.get(i).getOutput().printf(Server.gson.toJson(message));
+            clients.get(i).getOutput().println(Server.gson.toJson(message));
         }
     }
 
@@ -28,7 +28,7 @@ public class Sender {
         try {
             Server.getGui().printInfo("Sending: " + message);
             MessageObject object = new MessageObject(ServerConstants.REQUEST_DISCONNECT, message, SENDER_NAME);
-            client.getOutput().printf(Server.gson.toJson(object));
+            client.getOutput().println(Server.gson.toJson(object));
             client.disconnectFromClient();
         } catch (Exception e) {
             e.printStackTrace();

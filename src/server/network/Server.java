@@ -96,8 +96,8 @@ public class Server {
                     }
                     else{
                         connections.add(client);
-                        Sender.broadcastToAll(connections, ServerConstants.REQUEST_INFO, client.getClient().getInetAddress().getHostAddress() + " connected.");
                         connectionPool.execute(client);
+                        Sender.broadcastToAll(connections, ServerConstants.REQUEST_INFO, client.getClient().getInetAddress().getHostAddress() + " connected.");
                     }
                 }
             }catch(Exception  e){

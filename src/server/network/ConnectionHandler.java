@@ -20,6 +20,7 @@ public class ConnectionHandler extends Thread{
             input = new BufferedReader(new InputStreamReader(client.getInputStream()));
             output = new PrintWriter(client.getOutputStream(), true);
             running = true;
+            System.out.println(input);
         }catch(Exception e){
             disconnectFromClient();
             e.printStackTrace();
