@@ -93,6 +93,9 @@ public class Server {
          * @return
          */
         private boolean isServerFull(){
+            if(connections.size() >= ServerConstants.MAX_PLAYERS){
+                return true;
+            }
             return false;
         }
 

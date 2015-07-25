@@ -27,7 +27,7 @@ public class Sender {
     public static void closeConnection(ConnectionHandler client, String message) {
         try {
             Server.getGui().printInfo(" - DATA IS MOVING!!!!!: " + message);
-            MessageObject object = new MessageObject(ServerConstants.REQUEST_REFUSED, message, SENDER_NAME);
+            MessageObject object = new MessageObject(ServerConstants.REQUEST_INFO, message, SENDER_NAME);
             client.getOutput().println(Server.gson.toJson(object));
             client.disconnectFromClient();
         } catch (Exception e) {

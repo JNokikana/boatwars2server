@@ -24,5 +24,4 @@ public abstract interface ServerConstants {
     public final static String REQUEST_ALL_DESTROYED = "YOU SUNK MY BATTLESHIPS!";
     public final static String REQUEST_SUNK = "SUNK";
     public final static String REQUEST_INFO = "INFO";
-    public final static String REQUEST_REFUSED = "FU";
 }
