@@ -24,6 +24,18 @@ public class Sender {
         }
     }
 
+    public static void broadcastBeginGame(){
+        MessageObject message = new MessageObject(ServerConstants.REQUEST_BEGIN, "", SENDER_NAME);
+        String gameId;
+
+        for (int i = 0; i < Server.getConnections().size(); i++) {
+            gameId = String.valueOf(i);
+            message.setMessage(gameId);
+            Server.getGui().printInfo(gameId);
+            Server.getConnections().get(i).getOutput().println(Server.gson.toJson(message));
+        }
+    }
+
     public static void closeConnection(ConnectionHandler client, String message) {
         try {
             Server.getGui().printInfo(message);

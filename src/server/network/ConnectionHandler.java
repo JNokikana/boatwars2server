@@ -31,10 +31,6 @@ public class ConnectionHandler extends Thread{
         }
     }
 
-    public boolean isRunning(){
-        return running;
-    }
-
     public Socket getClient(){
         return this.client;
     }

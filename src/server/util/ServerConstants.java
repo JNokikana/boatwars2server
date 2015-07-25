@@ -6,6 +6,7 @@ package server.util;
 public abstract interface ServerConstants {
 
     public final static String SERVER_MESSAGE_START = "BoatWars server started!";
+    public final static String SERVER_MESSAGE_BEGIN = "Both players have joined. Place your boats. When ready, press 'Ready'.";
 
     public final static int MAX_PLAYERS = 2;
     public final static int PORT = 17413;

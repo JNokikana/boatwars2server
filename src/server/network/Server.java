@@ -97,6 +97,15 @@ public class Server {
         }
 
         /**
+         * Checks whether enough players have connected to begin the game.
+         * @return
+         */
+        private void beginGame(){
+            Sender.broadcastBeginGame();
+            inProgress = true;
+        }
+
+        /**
          * Checks if the server is full.
          * @return
          */
@@ -121,8 +130,15 @@ public class Server {
                         connections.add(client);
                         connectionPool.execute(client);
                         Sender.broadcastToAll(ServerConstants.REQUEST_INFO, client.getClient().getInetAddress().getHostAddress() +
-                                " connected. Number of connected players is now "
-                                + connections.size() + ". Game will begin once two players have connected.");
+                                " connected.");
+                        if(connections.size() == ServerConstants.MAX_PLAYERS){
+                            beginGame();
+                        }
+                        else{
+                            Sender.broadcastToAll(ServerConstants.REQUEST_INFO, "Number of connected players is now " +
+                                    connections.size() + ". Game will begin once two players have connected.");
+                        }
+
                     }
                 }
             }catch(Exception  e){
