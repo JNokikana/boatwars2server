@@ -120,7 +120,9 @@ public class Server {
                     else{
                         connections.add(client);
                         connectionPool.execute(client);
-                        Sender.broadcastToAll(connections, ServerConstants.REQUEST_INFO, client.getClient().getInetAddress().getHostAddress() + " connected.");
+                        Sender.broadcastToAll(ServerConstants.REQUEST_INFO, client.getClient().getInetAddress().getHostAddress() +
+                                " connected. Number of connected players is now "
+                                + connections.size() + ". Game will begin once two players have connected.");
                     }
                 }
             }catch(Exception  e){

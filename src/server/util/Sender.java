@@ -16,11 +16,11 @@ public class Sender {
 
     public static final String SENDER_NAME = "SERVER";
 
-    public static void broadcastToAll(List<ConnectionHandler> clients, String type, String text) {
+    public static void broadcastToAll(String type, String text) {
         MessageObject message = new MessageObject(type, text, SENDER_NAME);
-        for (int i = 0; i < clients.size(); i++) {
+        for (int i = 0; i < Server.getConnections().size(); i++) {
             Server.getGui().printInfo(text);
-            clients.get(i).getOutput().println(Server.gson.toJson(message));
+            Server.getConnections().get(i).getOutput().println(Server.gson.toJson(message));
         }
     }
 

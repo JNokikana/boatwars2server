@@ -2,6 +2,7 @@ package server.network;
 
 import server.util.MessageObject;
 import server.util.Player;
+import server.util.Sender;
 import server.util.ServerConstants;
 
 import java.io.BufferedReader;
@@ -58,10 +59,17 @@ public class ConnectionHandler extends Thread{
         }
     }
 
+    private void createNewPlayer(String nickname){
+        player = new Player();
+        player.setName(nickname);
+        Server.getGui().printInfo("Player created: " + nickname);
+    }
+
     public void handleRequest(MessageObject data){
         switch(data.getType()){
             case ServerConstants.REQUEST_JOIN:
-
+                createNewPlayer(data.getSender());
+                break;
         }
     }
     
@@ -75,7 +83,7 @@ public class ConnectionHandler extends Thread{
                 }
 
                 if(input.read() == -1){
-                    Server.getGui().printInfo(client.getInetAddress().getHostAddress() + " disconnected from server.");
+                    Sender.broadcastToAll(ServerConstants.REQUEST_INFO, client.getInetAddress().getHostAddress() + " disconnected from server.");
                     disconnectFromClient();
                 }
             }
