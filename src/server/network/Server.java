@@ -21,6 +21,10 @@ public class Server {
     private static Gui gui;
     private static boolean loggingEnabled;
     private static boolean inProgress;
+    /**
+     * Whose turn is it currently.
+     */
+    private static int turnPlayerId = 0;
 
     public static void init(Gui chosen, boolean logging){
         try{
@@ -37,6 +41,15 @@ public class Server {
             gui.printError("", e);
         }
     }
+
+    public static int getTurnPlayerId() {
+        return turnPlayerId;
+    }
+
+    public static void setTurnPlayerId(int turnPlayerId) {
+        Server.turnPlayerId = turnPlayerId;
+    }
+
 
     public static List<ConnectionHandler> getConnections(){
         return connections;
@@ -83,6 +96,19 @@ public class Server {
     }
 
     /**
+     * Checks whether both players are ready ands starts the game if this is the case.
+     */
+    public static void startGameIfReady(){
+        for(int i = 0; i < connections.size(); i ++){
+            if(!connections.get(i).getPlayer().isReady()){
+                return;
+            }
+        }
+
+        Sender.broadcastBeginGame();
+    }
+
+    /**
      * The listener thread for the server that waits for incoming client connections.
      */
     private static class ConnectionListener extends Thread{
@@ -101,7 +127,7 @@ public class Server {
          * @return
          */
         private void beginGame(){
-            Sender.broadcastBeginGame();
+            Sender.broadcastBoatPlacement();
             inProgress = true;
         }
 
@@ -130,13 +156,13 @@ public class Server {
                         connections.add(client);
                         connectionPool.execute(client);
                         Sender.broadcastToAll(ServerConstants.REQUEST_INFO, client.getClient().getInetAddress().getHostAddress() +
-                                " connected.");
+                                " connected.", null);
                         if(connections.size() == ServerConstants.MAX_PLAYERS){
                             beginGame();
                         }
                         else{
                             Sender.broadcastToAll(ServerConstants.REQUEST_INFO, "Number of connected players is now " +
-                                    connections.size() + ". Game will begin once two players have connected.");
+                                    connections.size() + ". Game will begin once two players have connected.", null);
                         }
 
                     }

@@ -16,15 +16,31 @@ public class Sender {
 
     public static final String SENDER_NAME = "SERVER";
 
-    public static void broadcastToAll(String type, String text) {
-        MessageObject message = new MessageObject(type, "'" + text + "'", SENDER_NAME);
+    public synchronized static void broadcastToAll(String type, String text, String sender) {
+        MessageObject message;
+
+        if(sender == null){
+            message = new MessageObject(type, text, SENDER_NAME);
+        }
+        else{
+            message = new MessageObject(type, text , sender);
+        }
+        Server.getGui().printInfo(text);
+
         for (int i = 0; i < Server.getConnections().size(); i++) {
-            Server.getGui().printInfo(text);
             Server.getConnections().get(i).getOutput().println(Server.gson.toJson(message));
         }
     }
 
     public static void broadcastBeginGame(){
+        broadcastToAll(ServerConstants.REQUEST_GAMEPLAY_START, "", null);
+    }
+
+    public synchronized static void broadcastPassTurn(String id){
+        broadcastToAll(ServerConstants.REQUEST_ENDTURN, id, null);
+    }
+
+    public static void broadcastBoatPlacement(){
         MessageObject message = new MessageObject(ServerConstants.REQUEST_BEGIN, "", SENDER_NAME);
         String gameId;
 
@@ -36,10 +52,10 @@ public class Sender {
         }
     }
 
-    public static void closeConnection(ConnectionHandler client, String message) {
+    public synchronized static void closeConnection(ConnectionHandler client, String message) {
         try {
             Server.getGui().printInfo(message);
-            MessageObject object = new MessageObject(ServerConstants.REQUEST_INFO, "'" + message + "'", SENDER_NAME);
+            MessageObject object = new MessageObject(ServerConstants.REQUEST_INFO, message, SENDER_NAME);
             client.getOutput().println(Server.gson.toJson(object));
             client.disconnectFromClient();
         } catch (Exception e) {

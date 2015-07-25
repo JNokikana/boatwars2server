@@ -1,15 +1,11 @@
 package server.network;
 
-import server.util.MessageObject;
-import server.util.Player;
-import server.util.Sender;
-import server.util.ServerConstants;
+import server.util.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.function.Predicate;
 
 public class ConnectionHandler extends Thread{
     private Socket client;
@@ -17,6 +13,7 @@ public class ConnectionHandler extends Thread{
     private BufferedReader input;
     private PrintWriter output;
     private String readData;
+
     private Player player;
     
     public ConnectionHandler(Socket client){
@@ -29,6 +26,14 @@ public class ConnectionHandler extends Thread{
             disconnectFromClient();
             e.printStackTrace();
         }
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public Socket getClient(){
@@ -61,10 +66,29 @@ public class ConnectionHandler extends Thread{
         Server.getGui().printInfo("Player created: " + nickname);
     }
 
+    private void readyPlayer(){
+        player.setReady(true);
+        Sender.broadcastToAll(ServerConstants.REQUEST_INFO, "Player " + player.getName() + " is ready.", null);
+        Server.startGameIfReady();
+    }
+
+    private void endPlayerTurn(String id){
+        Sender.broadcastPassTurn(id);
+    }
+
     public void handleRequest(MessageObject data){
         switch(data.getType()){
             case ServerConstants.REQUEST_JOIN:
                 createNewPlayer(data.getSender());
+                break;
+            case ServerConstants.REQUEST_ENDTURN:
+                endPlayerTurn(data.getMessage());
+                break;
+            case ServerConstants.REQUEST_READY:
+                readyPlayer();
+                break;
+            case ServerConstants.REQUEST_MESSAGE:
+                Sender.broadcastToAll(ServerConstants.REQUEST_MESSAGE, data.getMessage(), data.getSender());
                 break;
         }
     }
@@ -79,7 +103,7 @@ public class ConnectionHandler extends Thread{
                 }
 
                 if(input.read() == -1){
-                    Sender.broadcastToAll(ServerConstants.REQUEST_INFO, client.getInetAddress().getHostAddress() + " disconnected from server.");
+                    Sender.broadcastToAll(ServerConstants.REQUEST_INFO, client.getInetAddress().getHostAddress() + " disconnected from server.", null);
                     disconnectFromClient();
                 }
             }

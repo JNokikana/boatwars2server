@@ -8,6 +8,7 @@ public class Player {
     private int score;
     /* Whether the player is player 1 or 2. */
     private int gameId;
+    private boolean ready;
 
     public String getName() {
         return name;
@@ -31,5 +32,13 @@ public class Player {
 
     public void setGameId(int gameId) {
         this.gameId = gameId;
+    }
+
+    public boolean isReady() {
+        return ready;
+    }
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 }
