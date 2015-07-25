@@ -89,13 +89,6 @@ public class Server {
         }
 
         /**
-         * Cleans up any leftover connections that have disconnected.
-         */
-        private void connectionCleanup(){
-
-        }
-
-        /**
          * Checks if the server is full.
          * @return
          */
@@ -110,7 +103,6 @@ public class Server {
 
                 while(listening){
                     ConnectionHandler client = new ConnectionHandler(server.accept());
-                    connectionCleanup();
                     if(isServerFull()){
                         Sender.closeConnection(client, "Connection refused");
                     }
