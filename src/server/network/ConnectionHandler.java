@@ -72,17 +72,13 @@ public class ConnectionHandler extends Thread{
         Server.startGameIfReady();
     }
 
-    private void endPlayerTurn(String id){
-        Sender.broadcastPassTurn(id);
-    }
-
     public void handleRequest(MessageObject data){
         switch(data.getType()){
             case ServerConstants.REQUEST_JOIN:
                 createNewPlayer(data.getSender());
                 break;
             case ServerConstants.REQUEST_ENDTURN:
-                endPlayerTurn(data.getMessage());
+                Sender.broadcastToAll(data);
                 break;
             case ServerConstants.REQUEST_READY:
                 readyPlayer();
@@ -91,6 +87,12 @@ public class ConnectionHandler extends Thread{
                 Sender.broadcastToAll(data);
                 break;
             case ServerConstants.REQUEST_HIT:
+                Sender.broadcastToAll(data);
+                break;
+            case ServerConstants.REQUEST_MISS:
+                Sender.broadcastToAll(data);
+                break;
+            case ServerConstants.REQUEST_SUNK:
                 Sender.broadcastToAll(data);
                 break;
         }

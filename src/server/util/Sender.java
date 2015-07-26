@@ -34,11 +34,6 @@ public class Sender {
         broadcastToAll(message);
     }
 
-    public synchronized static void broadcastPassTurn(String id){
-        MessageObject message = new MessageObject(ServerConstants.REQUEST_ENDTURN, id, null);
-        broadcastToAll(message);
-    }
-
     public static void broadcastBoatPlacement(){
         MessageObject message = new MessageObject(ServerConstants.REQUEST_BEGIN, "", SENDER_NAME);
         String gameId;
