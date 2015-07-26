@@ -16,16 +16,13 @@ public class Sender {
 
     public static final String SENDER_NAME = "SERVER";
 
-    public synchronized static void broadcastToAll(String type, String text, String sender) {
-        MessageObject message;
+    public synchronized static void broadcastToAll(MessageObject data) {
+        MessageObject message = data;
 
-        if(sender == null){
-            message = new MessageObject(type, text, SENDER_NAME);
+        if(message.getSender() == null){
+            message.setSender(SENDER_NAME);
         }
-        else{
-            message = new MessageObject(type, text , sender);
-        }
-        Server.getGui().printInfo(text);
+        Server.getGui().printInfo(message.getMessage());
 
         for (int i = 0; i < Server.getConnections().size(); i++) {
             Server.getConnections().get(i).getOutput().println(Server.gson.toJson(message));
@@ -33,11 +30,13 @@ public class Sender {
     }
 
     public static void broadcastBeginGame(){
-        broadcastToAll(ServerConstants.REQUEST_GAMEPLAY_START, "", null);
+        MessageObject message = new MessageObject(ServerConstants.REQUEST_GAMEPLAY_START, "", null);
+        broadcastToAll(message);
     }
 
     public synchronized static void broadcastPassTurn(String id){
-        broadcastToAll(ServerConstants.REQUEST_ENDTURN, id, null);
+        MessageObject message = new MessageObject(ServerConstants.REQUEST_ENDTURN, id, null);
+        broadcastToAll(message);
     }
 
     public static void broadcastBoatPlacement(){

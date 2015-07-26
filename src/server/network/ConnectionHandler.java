@@ -68,7 +68,7 @@ public class ConnectionHandler extends Thread{
 
     private void readyPlayer(){
         player.setReady(true);
-        Sender.broadcastToAll(ServerConstants.REQUEST_INFO, "Player " + player.getName() + " is ready.", null);
+        Sender.broadcastToAll(new MessageObject(ServerConstants.REQUEST_INFO, "Player " + player.getName() + " is ready.", null));
         Server.startGameIfReady();
     }
 
@@ -88,7 +88,10 @@ public class ConnectionHandler extends Thread{
                 readyPlayer();
                 break;
             case ServerConstants.REQUEST_MESSAGE:
-                Sender.broadcastToAll(ServerConstants.REQUEST_MESSAGE, data.getMessage(), data.getSender());
+                Sender.broadcastToAll(data);
+                break;
+            case ServerConstants.REQUEST_HIT:
+                Sender.broadcastToAll(data);
                 break;
         }
     }
@@ -103,7 +106,7 @@ public class ConnectionHandler extends Thread{
                 }
 
                 if(input.read() == -1){
-                    Sender.broadcastToAll(ServerConstants.REQUEST_INFO, client.getInetAddress().getHostAddress() + " disconnected from server.", null);
+                    Sender.broadcastToAll(new MessageObject(ServerConstants.REQUEST_INFO, client.getInetAddress().getHostAddress() + " disconnected from server.", null));
                     disconnectFromClient();
                 }
             }

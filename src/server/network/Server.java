@@ -2,6 +2,7 @@ package server.network;
 
 import com.google.gson.Gson;
 import server.gui.Gui;
+import server.util.MessageObject;
 import server.util.Sender;
 import server.util.ServerConstants;
 
@@ -155,14 +156,14 @@ public class Server {
                     else{
                         connections.add(client);
                         connectionPool.execute(client);
-                        Sender.broadcastToAll(ServerConstants.REQUEST_INFO, client.getClient().getInetAddress().getHostAddress() +
-                                " connected.", null);
+                        Sender.broadcastToAll(new MessageObject(ServerConstants.REQUEST_INFO, client.getClient().getInetAddress().getHostAddress() +
+                                " connected.", null));
                         if(connections.size() == ServerConstants.MAX_PLAYERS){
                             beginGame();
                         }
                         else{
-                            Sender.broadcastToAll(ServerConstants.REQUEST_INFO, "Number of connected players is now " +
-                                    connections.size() + ". Game will begin once two players have connected.", null);
+                            Sender.broadcastToAll(new MessageObject(ServerConstants.REQUEST_INFO, "Number of connected players is now " +
+                                    connections.size() + ". Game will begin once two players have connected.", null));
                         }
 
                     }
