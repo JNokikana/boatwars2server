@@ -9,6 +9,15 @@ public class Player {
     /* Whether the player is player 1 or 2. */
     private int gameId;
     private boolean ready;
+    private boolean wantsRematch;
+
+    public boolean isWantsRematch() {
+        return wantsRematch;
+    }
+
+    public void setWantsRematch(boolean wantsRematch) {
+        this.wantsRematch = wantsRematch;
+    }
 
     public String getName() {
         return name;

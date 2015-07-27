@@ -52,7 +52,7 @@ public class Server {
     }
 
 
-    public static List<ConnectionHandler> getConnections(){
+    public synchronized static List<ConnectionHandler> getConnections(){
         return connections;
     }
 
@@ -60,11 +60,11 @@ public class Server {
         return listening;
     }
 
-    public static Gui getGui(){
+    public synchronized static Gui getGui(){
         return gui;
     }
 
-    public static ServerSocket getServer(){
+    public synchronized static ServerSocket getServer(){
         return server;
     }
 
@@ -99,7 +99,7 @@ public class Server {
     /**
      * Checks whether both players are ready ands starts the game if this is the case.
      */
-    public static void startGameIfReady(){
+    public synchronized static void startGameIfReady(){
         for(int i = 0; i < connections.size(); i ++){
             if(!connections.get(i).getPlayer().isReady()){
                 return;
@@ -107,6 +107,18 @@ public class Server {
         }
 
         Sender.broadcastBeginGame();
+    }
+
+    /**
+     * Check whether or not rematch conditions have been met.
+     */
+    public synchronized static void startRematchIfOkay(){
+        for(int i = 0; i < connections.size(); i ++){
+            if(!connections.get(i).getPlayer().isWantsRematch()){
+                return;
+            }
+        }
+        Sender.broadcastBoatPlacement();
     }
 
     /**

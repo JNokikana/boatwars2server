@@ -72,6 +72,13 @@ public class ConnectionHandler extends Thread{
         Server.startGameIfReady();
     }
 
+    private void markRematch(MessageObject data){
+        player.setWantsRematch(true);
+        MessageObject message = new MessageObject(ServerConstants.REQUEST_MESSAGE, data.getSender() + " desires a rematch!", Sender.SENDER_NAME);
+        Sender.broadcastToAll(message);
+        Server.startRematchIfOkay();
+    }
+
     public void handleRequest(MessageObject data){
         switch(data.getType()){
             case ServerConstants.REQUEST_JOIN:
@@ -94,6 +101,14 @@ public class ConnectionHandler extends Thread{
                 break;
             case ServerConstants.REQUEST_SUNK:
                 Sender.broadcastToAll(data);
+                break;
+            case ServerConstants.REQUEST_ALL_DESTROYED:
+                data.setMessage(data.getSender() + ServerConstants.LOSER_MESSAGES[(int)(Math.random() * ServerConstants.LOSER_MESSAGES.length)] + ServerConstants.SERVER_MESSAGE_REMATCH);
+                data.setSender(Sender.SENDER_NAME);
+                Sender.broadcastToAll(data);
+                break;
+            case ServerConstants.REQUEST_REMATCH_YES:
+                markRematch(data);
                 break;
         }
     }
