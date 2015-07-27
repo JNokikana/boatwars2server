@@ -103,6 +103,8 @@ public class ConnectionHandler extends Thread{
                 Sender.broadcastToAll(data);
                 break;
             case ServerConstants.REQUEST_ALL_DESTROYED:
+                /* We reset the player variables to their pre-game state. */
+                Server.resetVariables();
                 data.setMessage(data.getSender() + ServerConstants.LOSER_MESSAGES[(int)(Math.random() * ServerConstants.LOSER_MESSAGES.length)] + ServerConstants.SERVER_MESSAGE_REMATCH);
                 data.setSender(Sender.SENDER_NAME);
                 Sender.broadcastToAll(data);

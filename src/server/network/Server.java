@@ -122,6 +122,16 @@ public class Server {
     }
 
     /**
+     * Resets player variables to their pre-game state.
+     */
+    public static void resetVariables(){
+        for(int i = 0; i < connections.size(); i ++){
+            connections.get(i).getPlayer().setReady(false);
+            connections.get(i).getPlayer().setWantsRematch(false);
+        }
+    }
+
+    /**
      * The listener thread for the server that waits for incoming client connections.
      */
     private static class ConnectionListener extends Thread{
