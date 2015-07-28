@@ -124,11 +124,20 @@ public class Server {
     /**
      * Resets player variables to their pre-game state.
      */
-    public static void resetVariables(){
+    public synchronized static void resetVariables(){
         for(int i = 0; i < connections.size(); i ++){
             connections.get(i).getPlayer().setReady(false);
             connections.get(i).getPlayer().setWantsRematch(false);
         }
+    }
+
+    public synchronized static void resetGame(){
+        Server.setInProgress(false);
+        MessageObject message = new MessageObject(ServerConstants.REQUEST_RESET_GAME, "The other player disconnected. Game has been reset.", null);
+        resetVariables();
+        Sender.broadcastToAll(message);
+        Sender.broadcastToAll(new MessageObject(ServerConstants.REQUEST_INFO, "Number of connected players is now " +
+                connections.size() + ". Game will begin once two players have connected.", null));
     }
 
     /**

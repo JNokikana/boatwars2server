@@ -55,6 +55,7 @@ public class ConnectionHandler extends Thread{
             running = false;
             /* We remove this connection from the list of active connections. */
             Server.getConnections().remove(this);
+            Server.resetGame();
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -73,8 +74,16 @@ public class ConnectionHandler extends Thread{
     }
 
     private void markRematch(MessageObject data){
+        MessageObject message;
+
+        if(!player.isWantsRematch()){
+            message = new MessageObject(ServerConstants.REQUEST_MESSAGE, data.getSender() + " desires a rematch!", Sender.SENDER_NAME);
+        }
+        else{
+            message = new MessageObject(ServerConstants.REQUEST_MESSAGE, data.getSender() + " is desperately spamming for a rematch!", Sender.SENDER_NAME);
+        }
+
         player.setWantsRematch(true);
-        MessageObject message = new MessageObject(ServerConstants.REQUEST_MESSAGE, data.getSender() + " desires a rematch!", Sender.SENDER_NAME);
         Sender.broadcastToAll(message);
         Server.startRematchIfOkay();
     }
