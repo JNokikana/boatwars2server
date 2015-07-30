@@ -1,4 +1,4 @@
-package server.util;
+package com.joonas.ninja.boatwarsserver.util;
 
 /**
  * Created by joonas on 24.7.2015.

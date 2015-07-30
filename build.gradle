@@ -2,16 +2,29 @@ group 'boatwars'
 version '2.0'
 
 apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = "com.joonas.ninja.boatwarsserver.Main"
 
 sourceSets.main.java.srcDirs = ["src/"]
 
-sourceCompatibility = 1.5
+sourceCompatibility = 1.7
+
+jar{
+    baseName = "boatwarsServer"
+    version = "1.0"
+    manifest{
+        attributes "Main-Class": "$mainClassName"
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
     compile 'com.google.code.gson:gson:2.3.1'
 }

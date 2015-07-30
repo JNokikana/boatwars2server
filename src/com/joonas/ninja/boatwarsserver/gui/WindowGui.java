@@ -1,4 +1,4 @@
-package server.gui;
+package com.joonas.ninja.boatwarsserver.gui;
 
 /**
  * Created by joonas on 24.7.2015.

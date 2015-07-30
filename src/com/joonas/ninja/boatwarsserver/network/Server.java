@@ -1,10 +1,10 @@
-package server.network;
+package com.joonas.ninja.boatwarsserver.network;
 
 import com.google.gson.Gson;
-import server.gui.Gui;
-import server.util.MessageObject;
-import server.util.Sender;
-import server.util.ServerConstants;
+import com.joonas.ninja.boatwarsserver.gui.Gui;
+import com.joonas.ninja.boatwarsserver.util.MessageObject;
+import com.joonas.ninja.boatwarsserver.util.Sender;
+import com.joonas.ninja.boatwarsserver.util.ServerConstants;
 
 import java.net.ServerSocket;
 import java.util.ArrayList;

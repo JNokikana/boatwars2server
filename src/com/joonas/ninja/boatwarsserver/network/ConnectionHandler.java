@@ -1,6 +1,6 @@
-package server.network;
+package com.joonas.ninja.boatwarsserver.network;
 
-import server.util.*;
+import com.joonas.ninja.boatwarsserver.util.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

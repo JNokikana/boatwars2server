@@ -1,9 +1,7 @@
-package server.util;
+package com.joonas.ninja.boatwarsserver.util;
 
-import server.network.ConnectionHandler;
-import server.network.Server;
-
-import java.util.List;
+import com.joonas.ninja.boatwarsserver.network.ConnectionHandler;
+import com.joonas.ninja.boatwarsserver.network.Server;
 
 /**
  * Created by Joonas on 23.7.2015.

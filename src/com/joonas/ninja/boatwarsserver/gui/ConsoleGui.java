@@ -1,4 +1,4 @@
-package server.gui;
+package com.joonas.ninja.boatwarsserver.gui;
 
 import java.util.Calendar;
 

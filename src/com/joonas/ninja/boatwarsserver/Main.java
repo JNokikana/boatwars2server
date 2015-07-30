@@ -1,7 +1,7 @@
-package server;
+package com.joonas.ninja.boatwarsserver;
 
-import server.gui.ConsoleGui;
-import server.network.Server;
+import com.joonas.ninja.boatwarsserver.gui.ConsoleGui;
+import com.joonas.ninja.boatwarsserver.network.Server;
 
 /**
  * Created by Joonas on 23.7.2015.
